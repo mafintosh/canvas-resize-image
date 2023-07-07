@@ -25,8 +25,9 @@ module.exports = async function resize (base64, { width = 112, height = 112, url
   context.drawImage(image, x, y, w, h)
   const blob = await canvas.convertToBlob({ type: 'image/webp' })
   const reader = new FileReader()
-  const read = new Promise((resolve) => { reader.onloadend = resolve })
-  reader.readAsDataURL(blob)
-  await read
+  await new Promise((resolve) => {
+    reader.onloadend = resolve
+    reader.readAsDataURL(blob)
+  })
   return url ? reader.result : reader.result.slice(reader.result.indexOf(',') + 1)
 }
