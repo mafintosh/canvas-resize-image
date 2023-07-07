@@ -3,11 +3,11 @@ module.exports = async function resize (base64, { width = 112, height = 112, url
   const context = canvas.getContext('2d')
 
   const image = new Image()
-  image.src = base64.startsWith('data:') ? base64 : 'data:;base64,' + base64
 
   await new Promise((resolve, reject) => {
     image.onerror = reject
     image.onload = resolve
+    image.src = base64.startsWith('data:') ? base64 : 'data:;base64,' + base64
   })
 
   const aspect = image.width / image.height
